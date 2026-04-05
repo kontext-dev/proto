@@ -11,7 +11,7 @@ service AgentService {
   // ProcessHookEvent streams tool call events from the CLI to the backend
   // and receives policy decisions in return. Bidirectional streaming keeps
   // the connection open for the session lifetime — no per-hook HTTP overhead.
-  rpc ProcessHookEvent(stream HookEventRequest) returns (stream HookEventResponse);
+  rpc ProcessHookEvent(stream ProcessHookEventRequest) returns (stream ProcessHookEventResponse);
 
   // CreateSession establishes a governed agent session. Called once at the
   // start of `kontext start`. Returns session context used for all subsequent
@@ -33,12 +33,12 @@ service AgentService {
   // SyncPolicy streams the current policy state for the session's org/agent.
   // The sidecar caches this locally for fast hook evaluation. The server
   // pushes updates when policy changes.
-  rpc SyncPolicy(SyncPolicyRequest) returns (stream PolicyUpdate);
+  rpc SyncPolicy(SyncPolicyRequest) returns (stream SyncPolicyResponse);
 }
 
 // --- Hook Events ---
 
-message HookEventRequest {
+message ProcessHookEventRequest {
   string session_id = 1;
   string agent = 2; // "claude", "cursor", "codex"
   string hook_event = 3; // "PreToolUse", "PostToolUse", "UserPromptSubmit"
@@ -49,7 +49,7 @@ message HookEventRequest {
   string cwd = 8;
 }
 
-message HookEventResponse {
+message ProcessHookEventResponse {
   Decision decision = 1;
   string reason = 2;
   string event_id = 3;
@@ -128,7 +128,7 @@ message SyncPolicyRequest {
   string session_id = 1;
 }
 
-message PolicyUpdate {
+message SyncPolicyResponse {
   // OpenFGA tuples for local evaluation
   repeated PolicyTuple tuples = 1;
   bool full_sync = 2; // true = replace all, false = incremental
