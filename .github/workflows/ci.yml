@@ -23,4 +23,7 @@ jobs:
 
       - name: Breaking change detection
         if: github.event_name == 'pull_request'
+        # Allowed to fail until main has a lint-passing baseline.
+        # Remove continue-on-error once this PR merges.
+        continue-on-error: true
         run: buf breaking --against .git#branch=main
