@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package kontext.agent.v1;
 
-option go_package = "github.com/kontext-dev/kontext-cli/gen/kontext/agent/v1;agentv1";
+option go_package = "github.com/kontext-dev/proto/gen/kontext/agent/v1;agentv1";
 
 // AgentService is the bidirectional streaming service between the CLI sidecar
 // and the Kontext backend. The sidecar maintains a persistent connection and
