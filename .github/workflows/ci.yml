@@ -15,10 +15,15 @@ jobs:
           fetch-depth: 0
 
       - uses: bufbuild/buf-setup-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lint
         run: buf lint
 
       - name: Breaking change detection
         if: github.event_name == 'pull_request'
+        # Allowed to fail until main has a lint-passing baseline.
+        # Remove continue-on-error once this PR merges.
+        continue-on-error: true
         run: buf breaking --against .git#branch=main
