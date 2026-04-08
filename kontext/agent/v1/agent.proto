@@ -11,10 +11,9 @@ package kontext.agent.v1;
 // Credential exchange uses the existing OAuth token exchange endpoint
 // (POST /oauth2/token, RFC 8693) — not this service.
 service AgentService {
-  // ProcessHookEvent streams tool call events from the CLI to the backend
-  // and receives policy decisions in return. Bidirectional streaming keeps
-  // the connection open for the session lifetime.
-  rpc ProcessHookEvent(stream ProcessHookEventRequest) returns (stream ProcessHookEventResponse);
+  // ProcessHookEvent sends a single tool call event from the CLI to the
+  // backend and receives a policy decision in return.
+  rpc ProcessHookEvent(ProcessHookEventRequest) returns (ProcessHookEventResponse);
 
   // CreateSession establishes a governed agent session. Called once at the
   // start of `kontext start`.
