@@ -19,6 +19,11 @@ service AgentService {
   // start of `kontext start`.
   rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
 
+  // BootstrapCli prepares the shared CLI application for credential
+  // resolution and returns the managed preset providers the CLI should sync
+  // into the local env file.
+  rpc BootstrapCli(BootstrapCliRequest) returns (BootstrapCliResponse);
+
   // Heartbeat keeps the session alive. The sidecar sends heartbeats on an
   // interval; the backend marks sessions as disconnected if heartbeats stop.
   rpc Heartbeat(HeartbeatRequest) returns (HeartbeatResponse);
@@ -68,6 +73,23 @@ message CreateSessionResponse {
   string session_name = 2;
   string organization_id = 3;
   string agent_id = 4;
+}
+
+message BootstrapCliRequest {
+  string agent_id = 1;
+}
+
+message BootstrapCliResponse {
+  string application_id = 1;
+  repeated ManagedProvider managed_providers = 2;
+}
+
+message ManagedProvider {
+  string preset_key = 1;
+  string handle = 2;
+  string env_var = 3;
+  string placeholder = 4;
+  bool seed_on_first_run = 5;
 }
 
 message HeartbeatRequest {
