@@ -53,6 +53,10 @@ message ProcessHookEventResponse {
   Decision decision = 1;
   string reason = 2;
   string event_id = 3;
+  string reason_code = 4;
+  string request_id = 5;
+  string access_mode = 6;
+  string policy_set_epoch = 7;
 }
 
 enum Decision {
@@ -86,6 +90,8 @@ message BootstrapCliRequest {
 message BootstrapCliResponse {
   string application_id = 1;
   repeated ManagedProvider managed_providers = 2;
+  string access_mode = 3;
+  string policy_set_epoch = 4;
 }
 
 message ManagedProvider {
