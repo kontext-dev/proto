@@ -1,6 +1,6 @@
 # Kontext Protocol Buffers
 
-Shared contract between the [Kontext CLI](https://github.com/kontext-dev/kontext-cli) (Go client) and the [Kontext API](https://github.com/kontext-dev/kontext) (NestJS server).
+Shared contract between the [Kontext CLI](https://github.com/kontext-dev/kontext-cli) and the Kontext API.
 
 ## Services
 
@@ -11,7 +11,7 @@ The core governance service. Handles session lifecycle, hook event streaming, cr
 | RPC | Type | Purpose |
 |---|---|---|
 | `CreateSession` | Unary | Start a governed agent session |
-| `ProcessHookEvent` | Bidi stream | Stream tool call events, receive policy decisions |
+| `ProcessHookEvent` | Unary | Ingest a tool call event |
 | `Heartbeat` | Unary | Keep session alive |
 | `EndSession` | Unary | Terminate session |
 | `ExchangeCredential` | Unary | Resolve provider credentials |
